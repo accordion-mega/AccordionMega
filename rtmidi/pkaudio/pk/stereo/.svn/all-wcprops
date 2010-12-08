@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/pkaudio/!svn/ver/1/pk/stereo
+END
+transport.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/stereo/transport.py
+END
+updatempd
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/stereo/updatempd
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/stereo/__init__.py
+END
+ripper.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/stereo/ripper.py
+END
+cd_logic.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/stereo/cd_logic.py
+END
+database.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/stereo/database.py
+END
+CDROM.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pk/stereo/CDROM.py
+END
+ripperwidget.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pk/stereo/ripperwidget.py
+END
+PyCDDB.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/stereo/PyCDDB.py
+END
+CDLow.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pk/stereo/CDLow.py
+END
+smooth.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/stereo/smooth.py
+END
+mainwindow.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/stereo/mainwindow.py
+END
+mpdclient.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/stereo/mpdclient.py
+END
+cdnotify.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/stereo/cdnotify.py
+END
+mpd.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pkaudio/!svn/ver/1/pk/stereo/mpd.py
+END
+genres.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/stereo/genres.py
+END
+categories.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/stereo/categories.py
+END

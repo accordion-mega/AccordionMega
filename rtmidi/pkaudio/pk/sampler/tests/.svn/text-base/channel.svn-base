@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+import time
+import os.path
+import scosc
+
+GID1 = 1
+GID2 = 2
+
+SID1 = 1000
+SID2 = 1001
+
+ctl = scosc.Controller(('127.0.0.1', 57110), True)
+
+SYNTHDEF_PATH = os.path.join(os.path.expanduser('~'),
+                             '.pksampler', 'synthdefs')
+SYNTHDEFS = ('JASStereoSamplePlayer.scsyndef',
+             'JASSine.scsyndef',
+             'JASResonantLowPassFilter.scsyndef',
+             'JASDelayNoInterpolation.scsyndef',
+             )
+ctl.sendMsg('/dumpOSC', 1)
+for fname in SYNTHDEFS:
+    ctl.sendMsg('/d_load', (os.path.join(SYNTHDEF_PATH, fname)))
+
+ctl.sendMsg('/g_new', GID1, 1, 0)
+ctl.sendMsg('/g_new', GID2, 1, 0)
+ctl.sendMsg('/s_new', 'JASDelayNoInterpolation', SID1, 0, GID1)
+
+
+#ctl.sendMsg('/s_new', 'JASSine', SID2, 2, SID1)
+ctl.sendMsg('/s_new', 'JASSine', SID2, 0, GID1)
+
+time.sleep(1)
+ctl.sendMsg('/n_free', SID2)

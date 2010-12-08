@@ -1,0 +1,44 @@
+#!/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python
+
+import sys
+import optparse
+import socket
+import pk.audio.server
+
+
+def connect_tcp(port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(('localhost', port))
+    sock.listen(1)
+    conn, addr = sock.accept()
+    print 'pkaudiod: connected to',addr
+    return conn
+
+def main():
+    parser = optparse.OptionParser()
+    
+    parser.add_option("-r", "--rate",
+                      dest="samplerate", default='48000',
+                      help="set the samplerate")
+    parser.add_option("-p", "--periodsize",
+                      dest="periodsize", default='512',
+                      help="set the period size")
+    parser.add_option("-o", "--out-port",
+                      dest="port",
+                      help="listen on a tcp port")
+
+    options, args = parser.parse_args(sys.argv)
+
+    if options.port:
+        infile = connect_tcp(int(options.port))
+    else:
+        infile = sys.stdin
+
+    server = pk.audio.server.Server(infile, sys.stdout)
+    server.samplerate = int(options.samplerate)
+    server.periodsize = int(options.periodsize)
+    server._running = True
+    server.init()
+    server.exec_()
+
+main()

@@ -1,0 +1,28 @@
+#!/usr/bin/env pkpython
+
+import time
+from pk.audio import output
+from pk.audio import media
+
+
+class SineOut(output.Output):
+
+    infile = media.SineOutput()
+    infile.samplerate = 48000
+    periodsize = 1024
+    
+    def render(self, out_array):
+        chunk = self.infile.read(len(out_array))
+        out_array += chunk
+
+
+from PyQt4.QtGui import *
+app = QApplication([])
+w = QSlider()
+w.show()
+
+
+sineout = SineOut()
+sineout.start()
+app.exec_()
+sineout.stop()

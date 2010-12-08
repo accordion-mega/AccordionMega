@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+<name>mytestproject</name>
+<author>Patrick Stinson</author>
+<version>10.2</version>
+<email>patrickkidd@gmail.com</email>
+<str_field>blahblehblue</str_field>
+<int_field>15</int_field>
+<float_field>12.3565673</float_field>
+<list_field>
+<item>
+<list_str>myvlah</list_str>
+<list_int>53</list_int>
+<list_float>0.236626</list_float>
+</item>
+<item>
+<list_str>uhhu</list_str>
+<list_int>98</list_int>
+<list_float>123.12454</list_float>
+</item>
+</list_field>
+</project>

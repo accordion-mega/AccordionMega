@@ -1,0 +1,64 @@
+#!/usr/bin/env pkpython
+
+from PyQt4.QtCore import QObject, SIGNAL, Qt
+from PyQt4.QtGui import *
+from pk.widgets import MixerSlider, Button, VerticalWheel
+from pk.widgets import DisplayControl, Knob
+from pk.widgets.utils import run_widget
+
+
+class Demo(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+        self.palette().setColor(QPalette.Window, QColor(136, 136, 136))
+        Layout = QHBoxLayout(self)
+        Layout.setMargin(10)
+        Layout.setSpacing(5)
+
+        self.mixerSlider = MixerSlider()
+        self.mixerSlider.animated = True
+        Layout.addWidget(self.mixerSlider)
+
+        button = Button(self, color='gray')
+        button.setCheckable(True)
+        button.setChecked(True)
+        self.toggleControl = DisplayControl(button, self)
+        self.toggleControl.setText('gray')
+        Layout.addWidget(self.toggleControl)
+
+        self.button = Button(color='white')
+        self.button.setText('white')
+        self.button.setCheckable(True)
+        Layout.addWidget(self.button)
+
+        button_ = None
+        for i, color in enumerate(('black', 'maroon', 'green', 'purple')):
+            button = Button(color=color)
+            if i == 0 or not i % 2:
+                widget = DisplayControl(button, self)
+                if button_:
+                    QObject.connect(button_, SIGNAL('clicked()'),
+                                    button.animateClick)
+                    button_.setText("click ->")
+            else:
+                widget = button
+            widget.setText(color)
+            widget.show()
+            Layout.addWidget(widget)
+            button_ = button
+
+        self.verticalWheel = VerticalWheel()
+        Layout.addWidget(self.verticalWheel)
+
+        self.v_knob = Knob(self)
+        self.v_knob.setOrientation(Qt.Vertical)
+        Layout.addWidget(self.v_knob)
+
+        self.h_knob = Knob(self)
+        self.h_knob.setOrientation(Qt.Horizontal)
+        Layout.addWidget(self.h_knob)
+
+        self.resize(300,300)
+
+
+run_widget(Demo)

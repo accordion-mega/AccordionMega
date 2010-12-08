@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/pkaudio/!svn/ver/1/pyrtaudio
+END
+RtError.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pyrtaudio/RtError.h
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pyrtaudio/setup.py
+END
+RtAudio.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pyrtaudio/RtAudio.cpp
+END
+RtAudio.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pyrtaudio/RtAudio.h
+END
+rtaudiomodule.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/1/pyrtaudio/rtaudiomodule.cpp
+END

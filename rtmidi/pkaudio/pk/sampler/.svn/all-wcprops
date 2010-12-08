@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/pkaudio/!svn/ver/8/pk/sampler
+END
+synths.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pkaudio/!svn/ver/1/pk/sampler/synths.py
+END
+parts.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/sampler/parts.py
+END
+spec.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pk/sampler/spec.py
+END
+bender.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pkaudio/!svn/ver/1/pk/sampler/bender.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/sampler/__init__.py
+END
+keyboard.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/sampler/keyboard.py
+END
+controlpanel.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/pkaudio/!svn/ver/1/pk/sampler/controlpanel.py
+END
+commands.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/sampler/commands.py
+END
+rtplayer.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/sampler/rtplayer.py
+END
+machine.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/sampler/machine.py
+END
+slots.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/sampler/slots.py
+END
+engine.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pkaudio/!svn/ver/1/pk/sampler/engine.py
+END
+instrument.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/sampler/instrument.py
+END
+channel.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/sampler/channel.py
+END
+desktop.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/sampler/desktop.py
+END
+peakmeter.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/sampler/peakmeter.py
+END
+TODO
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/pkaudio/!svn/ver/1/pk/sampler/TODO
+END
+selector.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/sampler/selector.py
+END
+midi.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/2/pk/sampler/midi.py
+END
+mixer.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/sampler/mixer.py
+END
+patterneditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/1/pk/sampler/patterneditor.py
+END
+tempo.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/sampler/tempo.py
+END
+click.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/sampler/click.py
+END
+editor.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pkaudio/!svn/ver/1/pk/sampler/editor.py
+END
+toolbox.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/sampler/toolbox.py
+END
+editorapp.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/8/pk/sampler/editorapp.py
+END
+patches.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/sampler/patches.py
+END

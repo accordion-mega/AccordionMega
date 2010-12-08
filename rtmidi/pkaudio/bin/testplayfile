@@ -1,0 +1,80 @@
+#!/usr/bin/env pkpython
+
+import sys
+import time
+import optparse
+from pk.audio import media
+from pk.audio import output
+from pk.audio import flow
+from pk.audio import instrument
+
+
+class SimplePlayer(output.Output):
+
+    def __init__(self, fpath):
+        self.infile = media.SndFile(fpath)
+        self.samplerate = self.infile.samplerate
+        self.sound = self.infile.read(self.infile.length)
+        self.done = False
+        self.pos = 0
+        output.Output.__init__(self)
+
+    def read(self, items):
+        left = len(self.sound) - self.pos
+        items = left < items and left or items
+        chunk = self.sound[self.pos:self.pos+items]
+        self.pos += items
+        if self.pos == len(self.sound):
+            self.done = True
+        return chunk
+
+    def render(self, chunk):
+        mychunk = self.read(len(chunk))
+        chunk[:len(mychunk)] += mychunk
+
+    
+class FlowPlayer(flow.Mixer):
+
+    def __init__(self, fpath):
+        flow.Mixer.__init__(self)
+        self.instrument = instrument.Instrument(self)
+        self.volume = flow.Volume()
+        self.channel = flow.Channel([self.instrument,
+                                     self.volume])
+        #self.volume.left = .1
+        #self.volume.right = .1
+        self.volume.linked = True
+        self.done = False
+        self.attach(self.channel)
+        self.instrument.load(fpath)
+        self.instrument.loop(False)
+        self.instrument.play()
+
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option("-f", "--fpath",
+                      dest="fpath",
+                      help="the file to play")
+    parser.add_option("-F", "--flow",
+                      dest="flow", action="store_true",
+                      help="use th high-level flow module")
+    options, args = parser.parse_args(sys.argv)
+
+    if options.fpath is None:
+        raise RuntimeError('--fpath is required')
+    
+    if options.flow:
+        player = FlowPlayer(options.fpath)
+    else:
+        player = SimplePlayer(options.fpath)
+
+    print "%s Rate %i hz" % (options.fpath, player.samplerate)
+    player.start()
+    while player.done is False:
+        print 'sleeping'
+        time.sleep(.1)
+        print "%0.2f%%" % player.cpu_load()
+    player.stop()
+
+main()

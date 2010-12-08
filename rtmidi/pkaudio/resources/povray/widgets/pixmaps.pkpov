@@ -1,0 +1,6 @@
+<xml>
+<widget frames="127" name="knob" x="110" y="75" w="48" h="48" />
+<widget frames="127" name="mixerslider" x="107" y="12" w="53" h="178" />
+<widget frames="23" name="verticalwheel" w="36" x="119" y="44" h="112" />
+<widget frames="18" name="button" w="69" h="37" x="99" y="82" />
+</xml>

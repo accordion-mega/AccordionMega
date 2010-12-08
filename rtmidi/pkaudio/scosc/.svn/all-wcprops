@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/pkaudio/!svn/ver/1/scosc
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/pkaudio/!svn/ver/1/scosc/__init__.py
+END
+tools.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pkaudio/!svn/ver/1/scosc/tools.py
+END
+controller.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/scosc/controller.py
+END
+OSC.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/pkaudio/!svn/ver/1/scosc/OSC.py
+END
+listener.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/pkaudio/!svn/ver/1/scosc/listener.py
+END
+osctools.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/pkaudio/!svn/ver/1/scosc/osctools.py
+END

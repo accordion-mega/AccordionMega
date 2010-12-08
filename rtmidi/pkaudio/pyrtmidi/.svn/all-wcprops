@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/pkaudio/!svn/ver/22/pyrtmidi
+END
+rtmidimodule.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/pkaudio/!svn/ver/21/pyrtmidi/rtmidimodule.cpp
+END
+PyMidiMessage.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/22/pyrtmidi/PyMidiMessage.cpp
+END
+RtError.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pyrtmidi/RtError.h
+END
+PyMidiMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/21/pyrtmidi/PyMidiMessage.h
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/17/pyrtmidi/setup.py
+END
+MidiMessage.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/17/pyrtmidi/MidiMessage.cpp
+END
+RtMidi.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pkaudio/!svn/ver/15/pyrtmidi/RtMidi.cpp
+END
+MidiMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/17/pyrtmidi/MidiMessage.h
+END
+RtMidi.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/15/pyrtmidi/RtMidi.h
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets
+END
+pixmaps.pkpov
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/pixmaps.pkpov
+END
+render
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/render
+END
+knob.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/knob.py
+END
+button.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/button.py
+END
+pkpov.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/pkpov.py
+END
+mixerslider.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pkaudio/!svn/ver/1/resources/povray/widgets/mixerslider.py
+END

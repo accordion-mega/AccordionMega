@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/pkaudio/!svn/ver/21/pyrtmidi/tests
+END
+clock_output.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pkaudio/!svn/ver/16/pyrtmidi/tests/clock_output.py
+END
+test_callback.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/21/pyrtmidi/tests/test_callback.py
+END
+test_rtmidi.py
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/pkaudio/!svn/ver/16/pyrtmidi/tests/test_rtmidi.py
+END

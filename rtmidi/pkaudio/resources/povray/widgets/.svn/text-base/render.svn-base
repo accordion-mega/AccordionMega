@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import optparse
+
+
+def run_safe(cmd):
+    """ sub-proc with keyboard interrupt. """
+    name = cmd.split()[0]
+    args = cmd.split()[1:]
+    cmd = (os.P_WAIT, name, name) + tuple(args)
+    try:
+        ret = os.spawnlp(*cmd)
+    except KeyboardInterrupt, e:
+        return False
+    if ret == 0: return True
+    else: return False
+
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option("-p", "--pretend",
+                      dest="pretend", action="store_true",
+                      help="print output without changing anything")
+    parser.add_option("-m", "--module",
+                      dest="module",
+                      help="module to import")
+    parser.add_option("-f", "--frames",
+                      dest="frames",
+                      help="number of frames")
+    options, args = parser.parse_args(sys.argv)
+
+    for clock in range(int(options.frames)):
+        module = options.module
+        cmd = 'pkpovray -M%(module)s -k%(clock)i -q11'
+        if options.pretend:
+            cmd += ' -p'
+        cmd %= locals()
+        if options.pretend:
+            print cmd
+
+        if run_safe(cmd) is False:
+            print '** ERROR in pkpovray'
+            sys.exit(1)
+
+main()

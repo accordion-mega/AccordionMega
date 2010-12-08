@@ -1,0 +1,35 @@
+Install instructions for libraries and applications in the PK source
+code repository.
+
+
+REQUIREMENTS
+===============================================================================
+
+ - PyQt4
+ - supercollider
+
+
+INSTALL
+===============================================================================
+
+Perform the following instructions to install everything in the
+repository. This is what most people want to do.
+
+$ python setup.py build
+$ python setup.py install
+
+The above script is separated into indepenent and re-usable peices,
+which can be built and installed in the same manner.
+
+setup_rtmidi.py     - python midi I/O
+setup_scosc.py      - supercollider OSC
+setup_pk.py         - PK modules/apps
+
+
+UPDATES
+===============================================================================
+
+To download the newest code, type the following command in the repos
+directory:
+
+$ svn up

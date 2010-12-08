@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/pkaudio/!svn/ver/1/scsynth/tests
+END
+test_sequencer.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_sequencer.py
+END
+test_pattern.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_pattern.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/scsynth/tests/__init__.py
+END
+test_tempoclock.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_tempoclock.py
+END
+test_all
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_all
+END
+test_notestream.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_notestream.py
+END
+test_container.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_container.py
+END
+test_window.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/scsynth/tests/test_window.py
+END

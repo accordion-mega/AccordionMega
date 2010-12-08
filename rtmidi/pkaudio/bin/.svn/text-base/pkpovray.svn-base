@@ -1,0 +1,156 @@
+#!/usr/bin/env python
+
+import sys
+import os
+import optparse
+from pk.povray import utils, project
+
+PRETEND_MSG = """\b
+******************************************************************************
+
+You're running pkpovray in pretend mode, which means all code will
+exit as normal, minus critical calls to commit any changes to disk.
+
+******************************************************************************
+"""
+
+
+def die(msg):
+    print msg
+    sys.exit(1)
+
+def main():
+    parser = optparse.OptionParser()
+
+    parser.add_option("-p", "--pretend",
+                      dest="pretend", action="store_true",
+                      help="print output without changing anything")
+    parser.add_option("-d", "--preview",
+                      dest="preview", action="store_true",
+                      help="show the povray preview window while rendering")
+    parser.add_option('-x', '--pause', action="store_true", dest="pause",
+                      help="pause after rendering each frame")
+    parser.add_option("-l", "--list",
+                      dest="listmodules", action="store_true",
+                      help="list all modules in a project")
+    parser.add_option("-m", "--module", dest="modules", action="append",
+                      help="render a specific module")
+    parser.add_option("-r", "--render",
+                      dest="render", action="store_true",
+                      help="render the raw povray images")
+    parser.add_option("-c", "--crop",
+                      dest="crop", action="store_true",
+                      help="crop a widgets pixmaps by its mask")
+    parser.add_option('-f', '--project', dest='povproject',
+                      help='path of a file to open')
+    parser.add_option('-i', '--import-dir', dest='importdir',
+                      help='path to an existing directory to import')
+
+    parser.add_option('-k', '--clock', dest="clock", default=0.0,
+                      help="floating-point clock for rendering one frame")
+    parser.add_option('-M', '--renderpy', dest="renderpy",
+                      help="module in sys.path to open and render")
+    parser.add_option('-q', '--quality', dest="quality", default=11,
+                      help="render quality")
+    parser.add_option('-o', '--output-dir', dest='output_dir', default='.',
+                      help='image output dir')
+
+    options, args = parser.parse_args(sys.argv)
+    
+    if options.pretend:
+        print PRETEND_MSG
+
+    if options.renderpy:
+        from pk.povray.utils import NUM_CLOCK_DIGITS as CLOCK_DIGITS
+        from pk.povray import sdl
+
+        sys.path.append(os.getcwd())
+        name = options.renderpy
+        module = __import__(name)
+        outdir = os.path.join(os.getcwd(), name)
+        if not os.path.isdir(outdir):
+            os.makedirs(outdir)
+        
+        renderer = sdl.Renderer()
+        renderer.clock = float(options.clock)
+        renderer.quality = int(options.quality)
+        renderer.pause = bool(options.pause)
+        renderer.preview = bool(options.preview)
+        renderer.pretend = bool(options.pretend)
+
+        num = ('%i' % renderer.clock).zfill(CLOCK_DIGITS)
+        pngpath = os.path.join(outdir, name + num + '.png')
+
+        # TODO: add mask support
+        renderer.render(scene=module.scene, pngpath=pngpath)
+
+    elif options.listmodules:
+        if not options.povproject:
+            die('--povproject is requred')
+        proj = project.Project()
+        proj.read(options.povproject)
+        for i in proj.get_widgets():
+            print i
+        
+    elif options.render:
+        if not options.povproject:
+            die('--povproject is requred')
+        proj = project.Project()
+        proj.read(options.povproject)
+        if options.modules:
+            modules = options.modules
+        else:
+            modules = proj.get_widgets()
+        for name in modules:
+            entry = proj.get_widget(name)
+            indecies = utils.get_old_images(entry['name'], entry['frames'])
+            for i in indecies:
+                print '%s: %i' % (entry['name'], int(i))
+                utils.render_frame(entry['name'], clock=i,
+                                   preview=options.preview,
+                                   pretend=options.pretend,
+                                   pause=options.pause)
+
+    elif options.importdir:
+        proj = project.Project()
+        proj.import_dir(options.importdir)
+        proj.write('_tmp')
+        os.system('cat _tmp')
+        os.system('rm _tmp')
+
+    elif options.crop:
+        if not options.povproject:
+            die('--povproject is requred')
+        from PyQt4.QtGui import QApplication
+        app = QApplication(sys.argv)
+        proj = project.Project()
+        proj.read(options.povproject)
+        if options.modules:
+            modules = options.modules
+        else:
+            modules = proj.get_widgets()
+        for name in modules:
+            entry = proj.get_widget(name)
+            mask = (entry['x'], entry['y'], entry['w'], entry['h'])
+            path = os.path.join(os.path.dirname(options.povproject), name)
+            utils.crop_pixmaps(path, mask, pretend=options.pretend)
+
+    elif False: # HA HA HA HA!
+        from PyQt4.QtGui import QApplication
+        from pk.povray.mainwindow import MainWindow
+
+        app = QApplication(sys.argv)
+        mainwindow = MainWindow()
+        mainwindow.show()
+
+        if options.povproject:
+            mainwindow.load(options.povproject)
+        app.exec_()
+
+    else:
+        print 'no option'
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
+

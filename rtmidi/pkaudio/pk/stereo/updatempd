@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+import mpdclient
+
+mpd = mpdclient.MpdController('localhost', 6600)
+count = len(mpd.listall('/'))
+mpd.update()
+print 'added %i songs to database' % (len(mpd.listall('/')) - count)
+

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/pkaudio/!svn/ver/1/scosc/tests
+END
+test_scosc.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/scosc/tests/test_scosc.py
+END
+echoosc
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/scosc/tests/echoosc
+END
+testall
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/scosc/tests/testall
+END
+test_controller.py
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/pkaudio/!svn/ver/1/scosc/tests/test_controller.py
+END
+test_listener.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/scosc/tests/test_listener.py
+END

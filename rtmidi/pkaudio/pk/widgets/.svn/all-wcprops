@@ -1,0 +1,149 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/pkaudio/!svn/ver/1/pk/widgets
+END
+partchooser.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pk/widgets/partchooser.py
+END
+wheelpad.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/widgets/wheelpad.py
+END
+povwidgets.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/widgets/povwidgets.py
+END
+texteditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/widgets/texteditor.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/widgets/__init__.py
+END
+utils.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/widgets/utils.py
+END
+graph.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/widgets/graph.py
+END
+partchooserform.ui
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pkaudio/!svn/ver/1/pk/widgets/partchooserform.ui
+END
+maskeditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/widgets/maskeditor.py
+END
+led.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/pkaudio/!svn/ver/1/pk/widgets/led.py
+END
+displaycontrol.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pk/widgets/displaycontrol.py
+END
+timeline.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/widgets/timeline.py
+END
+stringselector.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pk/widgets/stringselector.py
+END
+resources.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/widgets/resources.py
+END
+knobs.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/pk/widgets/knobs.py
+END
+partchooserform.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pkaudio/!svn/ver/1/pk/widgets/partchooserform.py
+END
+pkwidget.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/widgets/pkwidget.py
+END
+preview.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/widgets/preview.py
+END
+scrollbar.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/widgets/scrollbar.py
+END
+textlabel.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/widgets/textlabel.py
+END
+pixmapwidgets.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/1/pk/widgets/pixmapwidgets.py
+END
+scroller.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/widgets/scroller.py
+END
+toolbox.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pk/widgets/toolbox.py
+END
+scrollarea.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/widgets/scrollarea.py
+END

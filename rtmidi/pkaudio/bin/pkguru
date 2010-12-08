@@ -1,0 +1,59 @@
+#!/usr/bin/env pkpython
+
+import sys
+import fpformat
+from PyQt4.QtGui import *
+import pk.widgets
+from uguru import *
+
+
+class GuruWidget(QWidget):
+    def __init__(self, parent=None, f=None):
+        QWidget.__init__(self, parent)
+        Layout = QGridLayout(self)
+        
+        self.setWindowIcon(QIcon(QPixmap(':/icons/pk_blue.png')))
+        
+        self.map = (('cpu', SENS_CPUTEMP, 'C'),
+                    ('sys', SENS_SYSTEMP, 'C'),
+                    ('pwm', SENS_PWMTEMP, 'C'),
+                    ('vcore', SENS_VCORE, 'V'),
+                    ('ddrvdd', SENS_DDRVDD, 'V'),
+                    ('ddrvtt', SENS_DDRVTT, 'V'),
+                    ('nbvdd', SENS_NBVDD, 'V'),
+                    ('sbvd', SENS_SBVDD, 'V'),
+                    ('htv', SENS_HTV, 'V'),
+                    ('agp', SENS_AGP, 'V'),
+                    ('_5v', SENS_5V, 'V'),
+                    ('_3v3', SENS_3V3, 'V'),
+                    ('_5vsb', SENS_5VSB, 'V'),
+                    ('_3VDUAL', SENS_3VDUAL, 'V'),
+                    ('cpufan', SENS_CPUFAN, 'rpm'),
+                    ('nbfan', SENS_NBFAN, 'rpm'),
+                    ('sysfan', SENS_SYSFAN, 'rpm'),
+                    ('auxfan1', SENS_AUXFAN1, 'rpm'),
+                    ('auxfan2', SENS_AUXFAN2, 'rpm'),
+                    )
+        
+        row = 0
+        for name, sensor, suffix in self.map:
+            Layout.addWidget(QLabel(name.ljust(15), self), row, 0)
+            setattr(self, name, QLabel(self))
+            Layout.addWidget(getattr(self, name), row, 1)
+            row += 1
+
+        self.startTimer(1000)
+        self.timerEvent(None)
+        
+    def timerEvent(self, e):
+        for name, sensor, suffix in self.map:
+            val = read_sensor(sensor)
+            val = '%s %s' % (fpformat.fix(val, 2).rjust(10), suffix.ljust(5))
+            label = getattr(self, name)
+            label.setText(val)
+        
+
+a = QApplication(sys.argv)
+w = GuruWidget()
+w.show()
+a.exec_()

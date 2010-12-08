@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pysoundtouch/tests
+END
+test_soundtouch.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pkaudio/!svn/ver/1/pysoundtouch/tests/test_soundtouch.py
+END
+testplayfile
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pkaudio/!svn/ver/1/pysoundtouch/tests/testplayfile
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/pkaudio/!svn/ver/1/pyuguru
+END
+openGuru.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pyuguru/openGuru.c
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pkaudio/!svn/ver/1/pyuguru/setup.py
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/pkaudio/!svn/ver/1/pyuguru/COPYING
+END
+openGuru.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/pkaudio/!svn/ver/1/pyuguru/openGuru.h
+END
+test_uguru.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pyuguru/test_uguru.py
+END
+ugurumodule.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pyuguru/ugurumodule.c
+END

@@ -1,0 +1,53 @@
+#!/usr/bin/env pkpython
+
+
+import sys
+import optparse
+from PyQt4.QtGui import QApplication
+from pk.stereo import MainWindow
+from pk.stereo import ripper
+#ripper.LIBRARY = '/home/patrick/ripper'
+
+try:
+    import psyco
+    psyco.full()
+except ImportError:
+    pass
+
+parser = optparse.OptionParser()
+parser.add_option("-H", "--host",
+                  dest="host", default="localhost",
+                  help="mpd host to connect to")
+parser.add_option("-p", "--port",
+                  dest="port", default=6600,
+                  help="mpd port to connect to")
+parser.add_option("-f", "--fullscreen",
+                  dest="fullscreen", action="store_true",
+                  help="show the app fullscreen")
+parser.add_option("-P", "--profile",
+                  dest="profile", action="store_true",
+                  help="spew profiling info")
+options, args = parser.parse_args(sys.argv)
+
+
+def main():    
+    app = QApplication(sys.argv)
+    stereo = MainWindow()
+    stereo.mpd.connectToHost(options.host, options.port)
+    if options.fullscreen:
+        stereo.showFullScreen()
+    else:
+        stereo.resize(1024, 768)
+    stereo.show()
+    app.exec_()
+    
+
+if options.profile:
+    import profile, pstats
+    profile.run('main()', 'tmp_profile')
+    s = pstats.Stats('tmp.profile')
+    s.sort_stats('cumulative')
+    s.print_stats()
+else:
+    main()
+    sys.exit() # kills child threads?

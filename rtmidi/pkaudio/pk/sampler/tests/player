@@ -1,0 +1,48 @@
+#!/usr/bin/env pkpython
+
+import os
+import sys
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import scsynth
+from pk.sampler import patterneditor, engine, synths
+
+
+def init(app):
+    server = scsynth.start()
+    #server = scsynth.connect('localhost', 57110, verbose=True)
+    engine_ = engine.Engine(server, verbose=True, parent=app)
+    SYNTHDEF_PATH = os.path.join(os.path.expanduser('~'),
+                                 '.pksampler', 'synthdefs')
+    SYNTHDEFS = ('JASStereoSamplePlayer.scsyndef',
+                 'JASSine.scsyndef',
+                 )
+    for fname in SYNTHDEFS:
+        engine_.server.sendMsg('/d_load', os.path.join(SYNTHDEF_PATH, fname))
+        while engine_.server.receive('/done')[1] != '/d_load': pass
+    return engine_
+
+
+def main():
+    app = QApplication(sys.argv)
+    pattern_ = scsynth.Pattern()
+    pattern_.beats = 2
+    for i in (0, 64, 128, 196):
+        pattern_.add(scsynth.Note(i, i+16, 64))
+
+    editor_ = patterneditor.PatternEditor()
+    editor_.set_pattern(pattern_)
+    editor_.move(100, 100)
+    editor_.resize(700, 600)
+    editor_.show()
+
+    engine = init(app)
+    stream = engine.register(synths.Sine(), pattern_)
+    stream.loop(True)
+    engine.start(lead=.1, length=.01)
+    QObject.connect(stream, SIGNAL('cursor(int)'),
+                    editor_.grid.set_play_cursor)
+    app.exec_()
+    engine.stop()
+
+main()

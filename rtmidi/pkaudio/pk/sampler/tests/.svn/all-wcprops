@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests
+END
+playpattern
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests/playpattern
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests/__init__.py
+END
+channel
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests/channel
+END
+player
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests/player
+END
+munger
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/sampler/tests/munger
+END

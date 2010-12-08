@@ -1,0 +1,190 @@
+//*****************************************//
+//  sm_echo.cpp
+//  by Dmitry Yegorenkov, 2010
+//  based on:
+//  midiout.cpp
+//  by Gary Scavone, 2003-2004.
+//
+//  Simple program to echo serial input,
+//  (assuming we send MIDI messages over it) to
+//  MIDI output.
+//
+//*****************************************//
+
+#include <iostream>
+#include <cstdlib>
+#include "RtMidi.h"
+
+#include <stdio.h>   /* Standard input/output definitions */
+#include <string.h>  /* String function definitions */
+#include <unistd.h>  /* UNIX standard function definitions */
+#include <fcntl.h>   /* File control definitions */
+#include <errno.h>   /* Error number definitions */
+#include <termios.h> /* POSIX terminal control definitions */
+
+#include <typeinfo>
+
+
+// Platform-dependent sleep routines.
+#if defined(__WINDOWS_MM__)
+  #include <windows.h>
+  #define SLEEP( milliseconds ) Sleep( (DWORD) milliseconds ) 
+#else // Unix variants
+  #include <unistd.h>
+  #define SLEEP( milliseconds ) usleep( (unsigned long) (milliseconds * 1000.0) )
+#endif
+
+// This function should be embedded in a try/catch block in case of
+// an exception.  It offers the user a choice of MIDI ports to open.
+// It returns false if there are no ports available.
+bool chooseMidiPort( RtMidiOut *rtmidi );
+int open_port();
+
+
+
+
+
+int main( int argc, char *argv[] )
+{
+  RtMidiOut *midiout = 0;
+  std::vector<unsigned char> message;
+  struct termios options;
+  unsigned char buf;
+  int fd,res;
+  int mask = 0xffffff00;
+
+  // RtMidiOut constructor
+  try {
+    midiout = new RtMidiOut();
+  }
+  catch ( RtError &error ) {
+    error.printMessage();
+    exit( EXIT_FAILURE );
+  }
+
+  // Call function to select port.
+  try {
+    if ( chooseMidiPort( midiout ) == false ) goto cleanup;
+  }
+  catch ( RtError &error ) {
+    error.printMessage();
+    goto cleanup;
+  }
+
+ // Note On: 144, 64, 90
+  message.push_back( 144 );
+  message.push_back( 64 );
+  message.push_back( 90 );
+  midiout->sendMessage( &message );
+
+  SLEEP( 500 );
+
+  // Note Off: 128, 64, 40
+  message[0] = 128;
+  message[1] = 64;
+  message[2] = 40;
+  midiout->sendMessage( &message );
+ 
+
+  std::cout << "\nOpening serial " << std::endl;
+  fd = open_port();
+  tcgetattr(fd, &options);
+  cfsetispeed(&options, B115200);
+  cfsetospeed(&options, B115200);
+  options.c_cflag |= (CLOCAL | CREAD);
+  options.c_cflag &= ~PARENB;
+  options.c_cflag &= ~CSTOPB;
+  options.c_cflag &= ~CSIZE;
+  options.c_cflag |= CS8;
+  options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+  //fcntl(fd, F_SETFL, FNDELAY);
+
+  tcsetattr(fd, TCSANOW, &options);
+  std::cout << "\nOptions set" << std::endl;
+  //std::cout << "baud = %d\n" << getbaud(fd) << std::endl;
+
+
+  // reading byte by byte, every 3 bytes might be midi message
+  while (1) {
+    for(int a=0;a<3;a++){
+      res = read(fd,&buf,1);
+      message[a] = buf;
+    }
+    //std::cout << message.size() << std::endl;
+    // sending it
+    midiout->sendMessage(&message);
+  }  
+
+  // Clean up
+ cleanup:
+  delete midiout;
+  close(fd);
+  return 0;
+}
+
+
+
+
+/*
+ * 'open_port()' - Open serial port 1.
+ *
+ * Returns the file descriptor on success or -1 on error.
+ */
+
+int open_port(void)
+{
+  int fd; /* File descriptor for the port */
+  // hardcoded port name
+  fd = open("/dev/cu.SerialAdaptor-DevB-1", O_RDWR | O_NOCTTY | O_NDELAY);
+  if (fd == -1)
+    {
+      /*
+       * Could not open the port.
+       */
+      perror("open_port: Unable to open port - ");
+    }
+  else
+    fcntl(fd, F_SETFL, 0);  
+  return (fd);
+}
+
+
+
+bool chooseMidiPort( RtMidiOut *rtmidi )
+{
+  std::cout << "\nWould you like to open a virtual output port? [y/N] ";
+
+  std::string keyHit;
+  std::getline( std::cin, keyHit );
+  if ( keyHit == "y" ) {
+    rtmidi->openVirtualPort();
+    return true;
+  }
+
+  std::string portName;
+  unsigned int i = 0, nPorts = rtmidi->getPortCount();
+  if ( nPorts == 0 ) {
+    std::cout << "No output ports available!" << std::endl;
+    return false;
+  }
+
+  if ( nPorts == 1 ) {
+    std::cout << "\nOpening " << rtmidi->getPortName() << std::endl;
+  }
+  else {
+    for ( i=0; i<nPorts; i++ ) {
+      portName = rtmidi->getPortName(i);
+      std::cout << "  Output port #" << i << ": " << portName << '\n';
+    }
+
+    do {
+      std::cout << "\nChoose a port number: ";
+      std::cin >> i;
+    } while ( i >= nPorts );
+  }
+
+  std::cout << "\n";
+  rtmidi->openPort( i );
+
+  return true;
+}

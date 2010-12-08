@@ -1,0 +1,34 @@
+#!/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python
+"""
+Generate a qt4 resource file with all the pixmaps in the current directory.
+
+"""
+
+
+import os
+
+PIXMAP_EXTS = ('png', 'xpm')
+
+def extension(fpath):
+    """ return the extension of fpath, not including the . """
+    return fpath[fpath.rfind('.')+1:]
+
+def render(pixmaps):
+    print '<RCC version="1.0">'
+
+    print '<qresource>'
+    for fpath in pixmaps:
+        print '<file>%s</file>' % fpath
+
+    print '</qresource>'
+    print '</RCC>'
+
+
+pixmaps = []
+for dirpath, dirpixmaps, filepixmaps in os.walk('.'):
+    for fname in filepixmaps:
+        fpath = os.path.join(dirpath, fname)
+        if extension(fpath) in PIXMAP_EXTS:
+            pixmaps.append(fpath.replace('./', ''))
+
+render(pixmaps)

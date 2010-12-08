@@ -1,0 +1,72 @@
+#!/usr/bin/env pkpython
+
+import os, sys
+BUILD_PATHS = [os.path.join(os.getcwd(), 'build/lib.linux-x86_64-2.4/'),
+               os.path.join(os.getcwd(), 'build/lib.darwin-8.5.0-Power_Macintosh-2.3/'),
+               ]
+sys.path = BUILD_PATHS + sys.path
+
+import soundtouch
+
+
+import sys
+import time
+import numarray
+from pk.audio import media
+from pk.audio import output
+
+
+class FilePlayer(output.Output):
+
+    def __init__(self, fpath):
+        self.infile = media.SndFile(fpath)
+        self.samplerate = self.infile.samplerate
+        self.sound = self.infile.read(self.infile.length)
+        self.done = False
+        self.pos = 0
+        self.st = soundtouch.SoundTouch()
+        self.st.setChannels(2)
+        self.st.setSampleRate(self.infile.samplerate)
+        #self.st.setRate(1.5)
+        output.Output.__init__(self, type=numarray.Float32)
+
+        #self.sound = self.sound.astype(numarray.Float32)
+        #self.sound /= 32768.0
+
+    def read_file(self, items):
+        left = len(self.sound) - self.pos
+        items = left < items and left or items
+        chunk = self.sound[self.pos:self.pos+items]
+        self.pos += items
+        if self.pos == len(self.sound):
+            self.done = True
+        return chunk
+
+    def read_resampled(self, items):
+        while self.st.numSamples() < items:
+            chunk = self.read_file(100)
+            self.st.putSamples(chunk)
+        chunk = numarray.array([0] * items, type=numarray.Float32)
+        returned = self.st.receiveSamples(chunk)
+        return chunk[:returned]
+
+    def render(self, chunk):
+        if self.done:
+            return
+        #mychunk = self.read_resampled(len(chunk))
+        mychunk = self.read_file(len(chunk))
+        chunk[:len(mychunk)] += mychunk
+
+    
+if len(sys.argv) > 1:
+    fpath = sys.argv[1]
+else:
+    fpath = 'bd.wav'
+player = FilePlayer(fpath)
+print "%s Rate %i hz" % (fpath, player.samplerate)
+player.start()
+while player.done is False:
+    time.sleep(.1)
+print 'stopping'
+player.stop()
+

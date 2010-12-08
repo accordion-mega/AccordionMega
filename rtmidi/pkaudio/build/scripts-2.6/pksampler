@@ -1,0 +1,174 @@
+#!/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python
+#
+#   Copyright (C) 2006 by Patrick Stinson                                 
+#   patrickkidd@gmail.com                                                   
+#                                                                         
+#   This program is free software; you can redistribute it and/or modify  
+#   it under the terms of the GNU General Public License as published by  
+#   the Free Software Foundation; either version 2 of the License, or     
+#   (at your option) any later version.                                   
+#                                                                         
+#   This program is distributed in the hope that it will be useful,       
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of        
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
+#   GNU General Public License for more details.                          
+#                                                                         
+#   You should have received a copy of the GNU General Public License     
+#   along with this program; if not, write to the                         
+#   Free Software Foundation, Inc.,                                       
+#   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.  
+#
+"""
+Direction change:
+
+PLAYER
+------
+ - channels: volume, pan, send1, send2
+ - synths: start/stop
+ - drag synths => channels
+ - drag patterns => synths
+ - drag effects => send1, send2
+ - beat match tempo
+
+EDITOR
+------
+ - edit, save
+ - synths, patterns, effects
+"""
+
+import sys
+import os.path
+import optparse
+
+
+def setup_env(engine):
+    infile = open(os.path.expanduser('~/.pksampler/pksampler.conf'), 'r')
+    for line in infile.readlines():
+        key, value = line.split(' = ')
+        value = value.strip()
+        if key == 'synthdef':
+            if engine:
+                engine.server.sendMsg('/d_load', (os.path.expanduser(value)))
+
+
+def setup_widgets(mixer, editor):
+    infile = open(os.path.expanduser('~/.pksampler/pksampler.conf'), 'r')
+    for line in infile.readlines():
+        key, value = line.split(' = ')
+        value = value.strip()
+        if key == 'click':
+            mixer.set_click(os.path.expanduser(value))
+        elif key == 'first_midi_channel':
+            channel = int(value)
+            for i in mixer.controls:
+                mixer.controlPanel.mapper.set_midi(channel, mixer.midi_input)
+                channel += 1
+        elif key == 'keyboard_channel':
+            channel = int(value)
+            mapper = mixer.controlPanel.mapper
+            mapper.set_midi(channel, mixer.midi_note)
+
+    def clock(msg):
+        pass
+
+    mixer.controlPanel.mapper.set_midi(248, clock)
+
+def main():
+    from PyQt4.QtCore import QObject, SIGNAL, Qt
+    from PyQt4.QtGui import QApplication, QIcon, QPixmap, QFont
+    import scsynth
+    import pk.sampler.engine
+    import pk.sampler.toolbox
+
+    parser = optparse.OptionParser()
+    # group?
+    parser.add_option("-m", "--mode",
+                      dest="mode", default='mix',
+                      help="[ mix | edit | both] default: mix")
+    parser.add_option("-f", "--fullscreen",
+                      dest="fullscreen", action="store_true",
+                      help="show the app fullscreen")
+    parser.add_option("-c", "--channels",
+                      dest="channels", default='5',
+                      help="number of mixer channels")
+    # group?
+    parser.add_option("-d", "--supercollider-dir",
+                      dest="exedir", default='/Applications/SuperCollider',
+                      help="supercollider install dir, for starting scsynth")
+    parser.add_option("-H", "--host",
+                      dest="host",
+                      help="host with a running supercollider server")
+    parser.add_option("-p", "--port",
+                      dest="port", default=57110,
+                      help="port to connect to supercollider server")
+    parser.add_option("-v", "--verbose",
+                      dest="verbose", action="store_true",
+                      help="spit OSC info")
+#    parser.add_option("-l", "--latency",
+#                      dest="latency", default=.01,
+#                      help="seconds of buffered control time")
+    parser.add_option("-s", "--spew",
+                      dest="spew", action='store_true',
+                      help="spew tons of OSC info")
+    options, args = parser.parse_args(sys.argv)
+
+    app = QApplication(sys.argv)
+    app.setStartDragDistance(6)
+    app.setWindowIcon(QIcon(':/icons/clover.png'))
+    font = QFont(app.font())
+    font.setFamily('Lucida Grande')
+    font.setPointSize(13)
+    app.setFont(font)
+
+    if options.host:
+        server = scsynth.connect(options.host, int(options.port),
+                                 verbose=options.verbose,
+                                 spew=bool(options.spew))
+    else:
+        server = scsynth.server.start(port=int(options.port),
+                                      verbose=options.verbose,
+                                      spew=bool(options.spew),
+                                      exedir=options.exedir)
+    if options.verbose:
+        server.sendMsg('/dumpOSC', 1)
+    engine = pk.sampler.engine.Engine(server, app,
+                                      verbose=options.verbose,
+                                      spew=options.spew)
+    setup_env(engine)
+
+    mixer = None
+    if options.mode in ('mix', 'both'):
+        import pk.sampler.mixer
+        mixer = pk.sampler.mixer.MainWindow(engine,
+                                            channels=int(options.channels))
+        pk.sampler.toolbox.load_all(mixer.toolbox)
+        if options.fullscreen:
+            mixer.showFullScreen()
+        else:
+            mixer.show()
+            mixer.resize(800, 600)
+        mixer.controlPanel.mapper.midiin.start()
+        mixer.set_mode('play')
+
+    editor = None
+    if options.mode in ('edit', 'both'):
+        import pk.sampler.editor
+        editor = pk.sampler.editor.MainWindow(engine)
+        if editor:
+            editor.showFullScreen()
+        else:
+            editor.show()
+            #editor.resize(800, 600)
+
+    setup_widgets(mixer, editor)
+    #latency = float(options.latency)
+    #engine.start(lead=latency, length=latency / 20)
+    engine.tempoclock.set_tempo(140)
+    engine.start()
+#    engine.start(lead=.1, length=.1)
+    app.exec_()
+    engine.stop()
+    if options.host is None:
+        engine.server.quit()
+
+main()

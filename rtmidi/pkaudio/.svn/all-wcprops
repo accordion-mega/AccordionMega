@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/svn/pkaudio/!svn/ver/22
+END
+setup_rtmidi.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/pkaudio/!svn/ver/1/setup_rtmidi.py
+END
+setup_scosc.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pkaudio/!svn/ver/1/setup_scosc.py
+END
+setup_pk.py
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/pkaudio/!svn/ver/1/setup_pk.py
+END
+setup_soundtouch.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/pkaudio/!svn/ver/1/setup_soundtouch.py
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/pkaudio/!svn/ver/1/setup.py
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/pkaudio/!svn/ver/1/Makefile
+END
+setup_rtaudio.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pkaudio/!svn/ver/1/setup_rtaudio.py
+END
+setup_uguru.py
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pkaudio/!svn/ver/1/setup_uguru.py
+END

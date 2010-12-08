@@ -1,0 +1,11 @@
+#!/usr/bin/env pkpython
+
+import unittest
+
+from test_ringbuffer import *
+from test_ratefilter import *
+from test_buffering import *
+from test_scheduler import *
+#from test_looper import *
+
+unittest.main()

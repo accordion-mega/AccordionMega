@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch
+END
+SoundTouch.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/SoundTouch.h
+END
+cpu_detect_x86_gcc.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/cpu_detect_x86_gcc.cpp
+END
+cpu_detect_x86_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/cpu_detect_x86_win.cpp
+END
+TDStretch.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/TDStretch.cpp
+END
+BPMDetect.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/BPMDetect.cpp
+END
+3dnow_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/3dnow_win.cpp
+END
+sse_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/sse_win.cpp
+END
+PeakFinder.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/PeakFinder.cpp
+END
+FIFOSamplePipe.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/FIFOSamplePipe.h
+END
+TDStretch.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/TDStretch.h
+END
+RateTransposer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/RateTransposer.cpp
+END
+BPMDetect.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/BPMDetect.h
+END
+PeakFinder.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/PeakFinder.h
+END
+mmx_gcc.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/mmx_gcc.cpp
+END
+mmx_win.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/mmx_win.cpp
+END
+FIFOSampleBuffer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/FIFOSampleBuffer.cpp
+END
+STTypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/STTypes.h
+END
+RateTransposer.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/RateTransposer.h
+END
+FIFOSampleBuffer.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/FIFOSampleBuffer.h
+END
+cpu_detect.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/cpu_detect.h
+END
+FIRFilter.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/FIRFilter.cpp
+END
+AAFilter.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/AAFilter.cpp
+END
+SoundTouch.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/SoundTouch.cpp
+END
+FIRFilter.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/FIRFilter.h
+END
+AAFilter.h
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pkaudio/!svn/ver/1/pysoundtouch/libsoundtouch/AAFilter.h
+END

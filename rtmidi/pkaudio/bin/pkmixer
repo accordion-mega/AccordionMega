@@ -1,0 +1,109 @@
+#!/usr/bin/env pkpython
+""" 
+A python mixer using pk widgets.
+
+"""
+
+NOALSAAUDIO = """
+This program requires the alsaaudio module, provided by
+PyAlsaAudio. You can get it from:
+
+http://sourceforge.net/projects/pyalsaaudio
+
+"""
+
+import sys
+try:
+    import alsaaudio
+except ImportError:
+    sys.stderr.write(NOALSAAUDIO)
+    sys.exit(-1)
+
+from PyQt4.QtCore import QObject, SIGNAL, QTimer
+from PyQt4.QtGui import *
+from pk.widgets import MixerSlider, Button
+from pk.widgets import TextLabel
+
+
+def alsa_to_pk_vol(x):
+    """ 100 => 127 """
+    x = 100 - x
+    x *= .01
+    return int(127 * x)
+
+
+def pk_to_alsa_vol(x):
+    """ 127 => 100 """
+    x = 127 - x
+    return int((x / 127.0) * 100)
+
+
+class AlsaMixer(QWidget):
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        self.palette().setColor(QPalette.Window, QColor(136, 136, 136))
+        Layout = QHBoxLayout(self)
+        self.setWindowIcon(QIcon(QPixmap(':/icons/pk_blue.png')))
+
+        
+        self.sliders = []
+        for name in alsaaudio.mixers():
+            label = TextLabel(name)
+
+            color = QColor('black')
+            color.setAlpha(180)
+            palette = QPalette(label.palette())
+            palette.setColor(QPalette.Text, color)
+            label.setPalette(palette)
+
+            label.setEdittable(False)
+            Layout.addWidget(label)
+            slider = MixerSlider()
+            slider.setObjectName(name)
+            slider.setAnimated(True)
+            Layout.addWidget(slider)
+            QObject.connect(slider, SIGNAL('valueChanged(int)'),
+                            self.setVolume)
+            mixer = alsaaudio.Mixer(name)
+            self.sliders.append(slider)
+
+        self.matchAlsaDevices()
+        self.syncTimer = QTimer(self)
+        QObject.connect(self.syncTimer, SIGNAL('timeout()'),
+                        self.matchAlsaDevices)
+        self.syncTimer.start(300)
+
+        # only YOU can prevent cyclic signal mania!
+        self.emitting = False
+
+    def matchAlsaDevices(self):
+        """ Set the volume sliders to match that of the alsa devices. """
+        for slider in self.sliders:
+            name = str(slider.objectName())
+            mixer = alsaaudio.Mixer(name)
+            volumes = mixer.getvolume()
+            for v in volumes:
+                if v != slider.value() and v >= 0 and v <= 100:
+                    self.emitting = True
+                    slider.setValue(alsa_to_pk_vol(v))
+                    self.emitting = False
+
+    def setVolume(self, value):
+        """ Value should be a MIDI value. """
+        if self.emitting is True:
+            return
+        value = pk_to_alsa_vol(value)
+        name = str(self.sender().objectName())
+        mixer = alsaaudio.Mixer(name)
+        for i, v in enumerate(mixer.getvolume()):
+            mixer.setvolume(value, i)
+
+
+if __name__ == '__main__':
+    import sys
+    from PyQt4.QtGui import QApplication
+    a = QApplication(sys.argv)
+    w = AlsaMixer()
+    w.show()
+    a.exec_()
+    

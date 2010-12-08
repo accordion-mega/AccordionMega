@@ -1,0 +1,11 @@
+#!/bin/sh
+
+LOG=/var/log/pkstereo.log
+
+echo >> $LOG
+echo >> $LOG
+echo "-------------------------------------------------------------------------------" >> $LOG
+echo "++++ New instance starting @"`date` >> $LOG
+/usr/bin/pkstereo -f >> $LOG 2>> $LOG
+echo "---- Instance quitting @ "`date` >> $LOG
+echo >> $LOG

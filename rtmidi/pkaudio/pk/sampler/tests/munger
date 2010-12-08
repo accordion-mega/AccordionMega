@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+SYNTHDEF_PATH = os.path.join(os.path.expanduser('~'), 'scwork', 'synthdefs')
+SAMPLESYNTH = os.path.join(SYNTHDEF_PATH, 'JASStereoSamplePlayer.scsynthdef')
+BUFID = 0
+SAMPLEID = 1000
+FPATH = '/Users/patrick/.pksampler/click.wav'
+
+controller = scosc.Controller(('127.0.0.1', 57110), listenport=57120,
+                              verbose=False)
+controller.sendMsg(['/notify', 1])
+controller.sendMsg(['/dumpOSC', 1])
+controller.sendMsg(['/status', 1])
+print 'STATUS',controller.receive('status.reply')
+
+controller.sendMsg(['/d_load', SAMPLESYNTH], wait=True)
+controller.sendMsg(['/b_allocRead', BUFID, FPATH], wait=True)
+controller.sendBundle(-1, [['/s_new', 'JASStereoSamplePlayer',
+                            SAMPLEID, 1, 0, 'bufnum', BUFID],
+                           ['/n_run', SAMPLEID, 0]])
+controller.sendMsg(['/n_set', SAMPLEID, 'loopIt', 0])
+controller.sendMsg(['/n_run', SAMPLEID, 1])
+controller.sendMsg(['/n_query', SAMPLEID])
+print 'QUERY:',controller.receive('/n_info', '/fail')

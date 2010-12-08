@@ -1,0 +1,131 @@
+#!/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python
+
+import sys
+import os.path
+import optparse
+import threading
+import rtmidi
+import scosc
+import scsynth
+
+
+def die(msg):
+    sys.stderr.write(msg+'\n')
+    sys.exit(1)
+
+
+def print_ports(midi):
+    ports = range(midi.getPortCount())
+    if ports:
+        for i in ports:
+            print '    [%i]:' % i,midi.getPortName(i)
+    else:
+        print 'NO MIDI PORTS!'
+        sys.exit(0)
+
+
+def ask_for_port(midi):
+    print_ports(midi)
+    print 'Enter midi device number [0]:',
+    entry = sys.stdin.readline().strip()
+    if entry:
+        return int(entry)
+    else:
+        return 0
+
+
+
+class Instrument:
+    def __init__(self, server, synthdef, verbose=False):
+        self.notes = {}
+        self.synth_pool = scsynth.IntPool(1000)
+        self.synthdef = synthdef
+        self.server = server
+        self.verbose = verbose
+
+    def note_on(self, key, vel):
+        self.notes[key] = self.synth_pool.get()
+        osc = ('/s_new', self.synthdef, self.notes[key], 1, 0, 'key', key)
+        self.server.sendMsg(*osc)
+        if self.verbose:
+            print '<<<', osc
+
+    def note_off(self, key, vel):
+        if key in self.notes:
+            osc = ('/n_free', self.notes[key])
+            self.server.sendMsg(*osc)
+            if self.verbose:
+                print '<<<', osc
+
+
+
+class Collector(threading.Thread):
+    def __init__(self, device, port, server, synthdef, verbose=False):
+        threading.Thread.__init__(self)
+        self.setDaemon(True)
+        self.port = port
+        self.device = device
+        self.instrument = Instrument(server, synthdef)
+        self.running = True
+        self.verbose = verbose
+
+    def quit(self):
+        self.running = False
+
+    def run(self):
+        self.device.openPort(self.port, True)
+        while self.running:
+            midi = self.device.getMessage()
+            if midi:
+                if self.verbose:
+                    print '>>>', midi
+                device, key, vel, timestamp = midi
+                if vel:
+                    self.instrument.note_on(key, vel)
+                else:
+                    self.instrument.note_off(key, vel)
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option("-S", "--synthdef",
+                      dest="synthdef",
+                      help="name of SynthDef to load and play")
+    parser.add_option("-d", "--defdir",
+                      dest="defdir",
+                      help="dir with scsyndef file")
+    parser.add_option("-H", "--host",
+                      dest="host", default='localhost',
+                      help="host with a running supercollider server")
+    parser.add_option("-p", "--port",
+                      dest="port", default=57110,
+                      help="port to connect to supercollider server")
+    parser.add_option("-v", "--verbose",
+                      dest="verbose", action="store_true",
+                      help="spit OSC responses, etc")
+    parser.add_option("-s", "--spew",
+                      dest="spew", action='store_true',
+                      help="spew OSC commands")
+    options, args = parser.parse_args(sys.argv)
+
+    if options.synthdef is None:
+        die('--synthdef is required')
+
+    server = scosc.Controller((options.host, int(options.port)),
+                              verbose=options.verbose,
+                              spew=options.spew)
+    if options.defdir:
+        fpath = os.path.join(options.defdir, options.synthdef+'.scsyndef')
+        server.sendMsg('/d_load', os.path.expanduser(fpath))
+
+    midi = rtmidi.RtMidiIn()
+    port = ask_for_port(midi)
+    print '\busing port %i' % port
+    collector = Collector(midi, port, server, options.synthdef,
+                          verbose=options.verbose)
+    collector.start()
+    print 'HIT ENTER TO EXIT'
+    sys.stdin.read(1)
+    collector.quit = True
+
+            
+main()

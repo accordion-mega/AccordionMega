@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pkaudio/!svn/ver/1/pk/audio/tests
+END
+test_ringbuffer.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_ringbuffer.py
+END
+test_levels.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_levels.py
+END
+test_scheduler.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_scheduler.py
+END
+test_media.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_media.py
+END
+test_looper.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_looper.py
+END
+test_performance.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_performance.py
+END
+test_ratefilter.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_ratefilter.py
+END
+testall
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/testall
+END
+test_buffering.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_buffering.py
+END
+test_flow.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_flow.py
+END
+test_instrument.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/test_instrument.py
+END
+testsine
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pk/audio/tests/testsine
+END

@@ -1,0 +1,23 @@
+#!/usr/bin/env pkpython
+
+import sys
+from PyQt4.QtCore import QObject, SIGNAL
+from PyQt4.QtGui import QApplication
+from pk.sampler import patterneditor, engine, pattern
+import pk.sampler.scsynth.server
+from pk.sampler import synths
+
+app = QApplication(sys.argv)
+
+editor = patterneditor.PatternEditor()
+patt = pattern.Pattern()
+editor.set_pattern(patt)
+editor.resize(1000, 600)
+editor.show()
+
+server = pk.sampler.scsynth.server.connect('localhost', 57110, verbose=True)
+engine = engine.Engine(server=server, verbose=True)
+stream = engine.register(synths.Sine(), patt)
+QObject.connect(stream, SIGNAL('cursor(int)'), editor.grid.set_play_cursor)
+engine.start()
+app.exec_()

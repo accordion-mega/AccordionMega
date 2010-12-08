@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pkaudio/!svn/ver/1/pk/widgets/tests
+END
+test_widgeteditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pkaudio/!svn/ver/1/pk/widgets/tests/test_widgeteditor.py
+END
+test_texteditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pkaudio/!svn/ver/1/pk/widgets/tests/test_texteditor.py
+END
+test_maskeditor.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pkaudio/!svn/ver/1/pk/widgets/tests/test_maskeditor.py
+END

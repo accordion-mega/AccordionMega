@@ -1,0 +1,82 @@
+PHASE 1: Sampler
+================
+
+qwerty/midi => player
+saw synth
+sampler
+
+
+PHASE 2: Midi
+=============
+
+convert sequencer
+convert widgets
+master/slave clock
+input recording/playback
+import/export
+
+
+PHASE 3: App
+============
+
+clips
+file browsers
+mixers
+effects
+
+
+
+
+                                        OLD
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+BEAT MATCHING
+ - assess tempo adjuster x/y
+ - async bending
+ - visual widget
+
+PARTS/SLOTS/SYNTHS
+ - reusability
+   - LoopPart
+     - pattern
+   - SynthPart
+     - pattern
+ - attribute events
+ - play actions
+ - note management
+ - buffer management
+ - SIGNALS
+   - synthAdded
+   - clicked [play/stop]
+
+SELECTOR
+ - song
+ - part
+
+CONTROL FRAMEWORK
+ - input only
+ - midi mapping
+ - export xml
+ - patches
+ - timeline
+
+
+0.5 GOALS
+=========
+looping, volume, effects
+ - prevent scsynth "crash"
+beat matching
+ - adjuster
+ - history tracers
+ - textlabel
+ - note management
+good selector
+ - group coloring
+ - understand grouping, etc.
+ - auto sort
+mixer.py cleanup
+
+0.6 GOALS
+=========
+cue automation
+ - control framework

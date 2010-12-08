@@ -1,0 +1,97 @@
+#!/usr/bin/env pkpython
+
+import os, os.path
+import sys
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import scsynth
+import pk.sampler.engine
+import pk.sampler.synths
+
+
+
+NAMES = ('bass/main',
+         'drums/4x4',
+         'lead/climax',
+         'pads/strings',
+         )
+
+FPATHS = [os.path.join(os.environ['HOME'],
+                       '.pksampler',
+                       'loops',
+                       'birdman',
+                       name+'.wav')
+          for name in NAMES]
+
+
+def frames_per_beat(tempo, samplerate, channels=2):
+    bps = float(tempo) / 60 / channels
+    return int(samplerate / bps) / 2
+
+
+import wave
+def guess_beats(fpath, filetempo=140):
+    wavfile = wave.open(fpath, 'r')
+    frames = wavfile.getnframes()
+    channels = wavfile.getnchannels()
+    samplerate = wavfile.getframerate() * channels
+    fpb = frames_per_beat(140, samplerate, channels)
+    beats = frames / fpb
+    rem = frames % float(fpb)
+    if rem > (fpb * .5):
+        beats += 1
+    return beats
+
+
+class BeatBox(QWidget):
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        Layout = QGridLayout(self)
+
+        server = scsynth.start(verbose=True, spew=True)
+        self.engine = pk.sampler.engine.Engine(server, self)
+        
+        self.buttonGroup = QButtonGroup(self)
+        QObject.connect(self.buttonGroup,
+                        SIGNAL('buttonClicked(QAbstractButton *)'),
+                        self.toggle)
+
+        for index, fpath in enumerate(FPATHS):
+            beats = guess_beats(fpath, 140)
+            note = pk.sampler.engine.Note(0, 64 * beats, 69)
+            pattern = pk.sampler.engine.Pattern([note])
+            pattern.beats = beats
+            synth = pk.sampler.synths.Sample()
+            synth['bufnum'] = self.engine.loader.load(fpath)
+            # channel?
+
+            label = QLabel('stopped', None)
+            button = QPushButton(os.path.basename(fpath), None)
+            button.data = (synth, pattern, label, None)
+            self.buttonGroup.addButton(button, index)
+            Layout.addWidget(label, 0, index)
+            Layout.addWidget(button, 1, index)
+
+        self.engine.start()
+
+    def toggle(self, button):
+        synth, pattern, label, stream = button.data
+        pattern.synth = synth
+        if stream:
+            self.engine.remove(pattern)
+            stream = None
+            label.setText('stopped')
+        else:
+            stream = self.engine.insert(pattern)
+            label.setText('playing')
+        button.data = (synth, pattern, label, stream)
+
+
+app = QApplication(sys.argv)
+beatbox = BeatBox()
+beatbox.show()
+beatbox.engine.server.sendMsg('/d_load', os.path.expanduser('~/.pksampler/synthdefs/JASStereoSamplePlayer.scsyndef'))
+beatbox.engine.tempoclock.set_tempo(140)
+app.exec_()
+beatbox.engine.stop()
+beatbox.engine.server.quit()

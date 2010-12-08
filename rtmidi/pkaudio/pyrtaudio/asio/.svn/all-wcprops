@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio
+END
+asiodrvr.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiodrvr.h
+END
+asiodrivers.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiodrivers.h
+END
+asiosys.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiosys.h
+END
+ginclude.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/ginclude.h
+END
+iasiothiscallresolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/iasiothiscallresolver.h
+END
+asio.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asio.h
+END
+iasiodrv.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/iasiodrv.h
+END
+asiolist.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiolist.cpp
+END
+asiodrivers.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiodrivers.cpp
+END
+iasiothiscallresolver.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/iasiothiscallresolver.cpp
+END
+asio.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asio.cpp
+END
+asiolist.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pkaudio/!svn/ver/1/pyrtaudio/asio/asiolist.h
+END
