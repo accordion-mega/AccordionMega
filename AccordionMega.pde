@@ -3,6 +3,7 @@
  Dimon Yegorenkov
  alpha from 03-10-2010
  optointerruptors version 14-11-2010
+ beta 12-12-2010
 
 */
 
@@ -286,17 +287,18 @@ byte curr_register_right = 0;
 byte ledPin = 13; 
 byte midi_channel1 = 0;
 byte midi_channel2 = 1;
-byte midi_volume_ctrl = 0xE0;
+byte midi_volume_ctrl = 0xB0;
 int lastUpdate = 0;
 byte curr_velocity = 127;
 byte velocity = 127;
+boolean velocity_active = false;
 int time = micros();
 int temperature = 0;
 long pressure = 0;
 long calibration_pressure = 0;
 int delta_pressure=0;
 int pressure_counter = 0;
-int pressure_loops = 10;
+int pressure_loops = 2;
 int min_pressure = -4000;
 int max_pressure = +4000;
 int pressure_step = max_pressure/127;
@@ -333,27 +335,11 @@ void setup() {
   // initializing keyboard byte select pins
   init_key_pins(right_row_pins,sizeof(right_row_pins));
   init_key_pins(left_row_pins,sizeof(right_row_pins));
-  /*for (int i; i<sizeof(right_row_pins); i++){
-    pinMode(right_row_pins[i], OUTPUT);
-    digitalWrite(right_row_pins[i], LOW);
-  } 
-  */
+
   // read register value from hardcoded setup
   redefine_register(register_pins_right, sizeof(register_pins_right), false);
   redefine_register(register_pins_left, sizeof(register_pins_left), true);
 
-  /*  for (int i; i<sizeof(register_pins_left);i++){
-    pinMode(register_pins_left[i], OUTPUT);
-    digitalWrite(register_pins_left[i], HIGH);
-    delay(2);
-    if(!digitalRead(register_pins_left[i])){
-      curr_register_left |= (1<<i);
-    }
-    else{ 
-      curr_register_left &= ~(1<<i); 
-    }
-  }
-  */
   
   if (DEBUG){
     Serial.println("value of registers right/left");
@@ -378,8 +364,8 @@ void setup() {
   if (DEBUG){
     for (int i=0; i<20; i++){
       time_delta("start");
-      //scan_keys(left_row_pins, sizeof(left_row_pins), LeftKeysStatus, true); 
-      //scan_keys(right_row_pins, sizeof(left_row_pins), RightKeysStatus, false);
+      scan_keys(left_row_pins, sizeof(left_row_pins), LeftKeysStatus, true); 
+      scan_keys(right_row_pins, sizeof(left_row_pins), RightKeysStatus, false);
     }
   Serial.println(calibration_pressure);
   time_delta("stop");
@@ -398,6 +384,17 @@ void time_delta(String message){
 
 void bmp085_read_temperature_and_pressure(int& temperature, long& pressure);
 
+//int my_abs(int i){
+//  //return i < 0 ? -i : i;
+//  return i;
+//}
+
+void noteOn(int midi_cmd, int pitch, int midi_vel){
+  Serial1.print(midi_cmd, BYTE);
+  Serial1.print(pitch, BYTE);
+  Serial1.print(midi_vel, BYTE);
+}
+
 void loop() {
   //use this, take most from arduino language 
   // apply the calibration to the sensor reading
@@ -405,22 +402,45 @@ void loop() {
   // in case the sensor value is outside the range seen during calibration
   //sensorValue = constrain(sensorValue, 0, 255);  
 
-  if(pressure_counter > 0){ pressure_counter--;}
-  else {
-    pressure = bmp085_read_up();    
-    delta_pressure = pressure - calibration_pressure;
-    //    noteOn(midi_volume_ctrl,0x07,delta_pressure/pressure_step);    
-    pressure_counter = pressure_loops;
+
+  pressure = bmp085_read_up();    
+  delta_pressure = abs(pressure - calibration_pressure);
+  //    noteOn(midi_volume_ctrl,0x07,delta_pressure/pressure_step);    
+  // setting up minimal pressure to start a sound
+  if (delta_pressure < 10){
+    // we have to get to send message controller to zero once it got to zero
+    if (curr_velocity>0){
+      noteOn(midi_volume_ctrl,0x0B,0);
+      //Serial.println("Zero crossed");
+      curr_velocity = 0;
+    }
   }
+  else { 
+    velocity_active = true;
+  }
+  // log(0) is a bad style
+  if(delta_pressure > 0){
+    velocity = int((log(float(delta_pressure)/100.0)+4.8)/0.03814) ;
+  }
+  else {
+    velocity = 0;
+  }
+  //Serial.print("vel ");
+  //Serial.print(velocity, DEC);
+  if ((velocity_active) && (curr_velocity != velocity)) {
+    noteOn(midi_volume_ctrl,0x0B,velocity);
+    curr_velocity = velocity;
+    velocity_active = false;
+    //Serial.print("Velocity ");
+    //Serial.println(curr_velocity, DEC);
+  }
+
+    //    pressure_counter = pressure_loops;
   
-
-
-  lcd.clear();
-  lcd.setCursor(0,1);
-  lcd.print(delta_pressure,DEC);
+  
   scan_keys(left_row_pins, sizeof(left_row_pins), LeftKeysStatus, true); 
   scan_keys(right_row_pins, sizeof(right_row_pins), RightKeysStatus, false);
-  delay(2);
+  //delay(100);
 }
 
 void blink(int pin, int cycles){
@@ -452,28 +472,9 @@ void scan_keys(char *row_pins, int size, int *KeysStatus, bool left) {
       else {
 	check_key(reg_values ^ KeysStatus[i],i,false,left); //sending modified bits only
       }           
-      }        
+    }        
   }
-  /*
-   //right hand scan
-   for (int i=0; i<sizeof(right_row_pins);i++){
-   digitalWrite(right_row_pins[i], HIGH);
-   delayMicroseconds(500);      
-      //delay(300);
-      reg_k_values = ~PINK;
-      digitalWrite(right_row_pins[i], LOW);
-      // checking for activity
-      // "if{} inside if{}" is to save time if nothing happens
-      if (reg_k_values != RightKeysStatus[i]){
-      if (reg_k_values > RightKeysStatus[i]){
-      check_right_key(reg_k_values ^ RightKeysStatus[i],i,true);  //sending modified bits only
-      }
-        else {
-	check_right_key(reg_k_values ^ RightKeysStatus[i],i,false); //sending modified bits only
-        }           
-	}        
-	}
-  */
+ 
 }
 
 void check_key(int reg, int group, boolean up, boolean left){
@@ -503,26 +504,6 @@ void check_key(int reg, int group, boolean up, boolean left){
      }     
    }
 }
-
-/*void check_left_key(int reg, int group, boolean up){
-   // saving 4 iterations, dividing byte by 2
-   if (reg & 0xF0) {
-     for(int i=0; i<4; i++){
-       if ((reg >> 4+i) & 1){
-         note_midi(group,i+4,up,register_left_changes,true);
-       }
-     }
-   }
-   else if (reg & 0x0F) { 
-    for(int i=0; i<4; i++){
-       if ((reg >> i) & 1){
-	 note_midi(group,i,up,register_left_changes,true);
-       }
-     }     
-   }
-}
-*/
-
 
 
 void note_midi(int group, int position, boolean on, char register_used[][5], boolean left){
@@ -577,6 +558,7 @@ void note_midi(int group, int position, boolean on, char register_used[][5], boo
     else {
       Serial.println(right_note_names[group][position]); 
     }
+    Serial.println(delta_pressure);
   };
   //MIDI output is more complex, number of notes sent depends on register
   if (left){
@@ -617,9 +599,9 @@ void note_midi(int group, int position, boolean on, char register_used[][5], boo
   }
 if (DEBUG) {Serial.println(" notes");}
   // LCD output
-  lcd.clear();
+  //lcd.clear();
   lcd.print(left_note_names[group][position]);
-  lcd.print(velocity);
+  lcd.print(curr_velocity);
 }
 
 
